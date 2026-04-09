@@ -413,10 +413,11 @@ That's it for getting started! As you become comfortable, you can explore additi
 |---------|--------------|
 | `/add-dir <directory>` | Add a directory to allowed list |
 | `/allow-all [on|off|show]` | Auto-approve all permission prompts; use `on` to enable, `off` to disable, `show` to check current status |
+| `/yolo` | Quick alias for `/allow-all on` — auto-approves all permission prompts. State persists across `/restart`. |
 | `/cwd`, `/cd [directory]` | View or change working directory |
 | `/list-dirs` | Show all allowed directories |
 
-> ⚠️ **Use with caution**: `/allow-all` skips confirmation prompts. Great for trusted projects, but be careful with untrusted code.
+> ⚠️ **Use with caution**: `/allow-all` and `/yolo` skip confirmation prompts. Great for trusted projects, but be careful with untrusted code.
 
 ### Session
 
