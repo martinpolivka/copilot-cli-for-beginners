@@ -1,5 +1,6 @@
 import json
 from dataclasses import dataclass, asdict
+from datetime import datetime
 from typing import List, Optional
 
 DATA_FILE = "data.json"
@@ -36,6 +37,9 @@ class BookCollection:
             json.dump([asdict(b) for b in self.books], f, indent=2)
 
     def add_book(self, title: str, author: str, year: int) -> Book:
+        current_year = datetime.now().year
+        if year < 1000 or year > current_year:
+            raise ValueError(f"Year must be between 1000 and {current_year}")
         book = Book(title=title, author=author, year=year)
         self.books.append(book)
         self.save_books()
@@ -67,6 +71,46 @@ class BookCollection:
             return True
         return False
 
+    def get_unread_books(self) -> List[Book]:
+        """Return all books that have not been read."""
+        return self.search_books(read_status=False)
+
     def find_by_author(self, author: str) -> List[Book]:
         """Find all books by a given author."""
         return [b for b in self.books if b.author.lower() == author.lower()]
+
+    def search_books(
+        self,
+        query: Optional[str] = None,
+        read_status: Optional[bool] = None,
+        year: Optional[int] = None,
+        year_from: Optional[int] = None,
+        year_to: Optional[int] = None,
+        sort_by: Optional[str] = None,
+    ) -> List[Book]:
+        """Search, filter, and sort books. All filters are combined with AND logic."""
+        results = list(self.books)
+
+        if query:
+            q = query.lower()
+            results = [
+                b for b in results
+                if q in b.title.lower() or q in b.author.lower()
+            ]
+
+        if read_status is not None:
+            results = [b for b in results if b.read == read_status]
+
+        if year is not None:
+            results = [b for b in results if b.year == year]
+
+        if year_from is not None:
+            results = [b for b in results if b.year >= year_from]
+
+        if year_to is not None:
+            results = [b for b in results if b.year <= year_to]
+
+        if sort_by in ("title", "author", "year"):
+            results.sort(key=lambda b: getattr(b, sort_by))
+
+        return results
