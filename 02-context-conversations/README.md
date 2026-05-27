@@ -351,6 +351,27 @@ copilot
 > /session delete-all        # Deletes all sessions (use with care!)
 ```
 
+### Persistent Memory Across Sessions
+
+Sessions save your conversation history, but **memory** goes one step further and lets Copilot CLI remember preferences and facts *across all sessions*, not just within a single one.
+
+```bash
+copilot
+
+> /memory show
+# Shows what Copilot CLI currently remembers about you and your project
+
+> /memory on
+# Enables memory (on by default if your account supports it)
+
+> /memory off
+# Disables memory (useful if you prefer a fresh slate each time)
+```
+
+For example, if you tell Copilot CLI "I always prefer pytest for Python testing", it can remember that preference and apply it automatically in future sessions. All without you having to repeat it.
+
+> 💡 **Memory vs. Sessions**: Sessions save conversation history so you can resume a specific task. Memory saves reusable repository facts and user preferences that Copilot can apply in future work. Think of sessions as task notebooks, and memory as reusable context Copilot can carry forward.
+
 ### Check and Manage Context
 
 As you add files and conversation, Copilot CLI's [context window](../GLOSSARY.md#context-window) fills up. Several commands are available to help you stay in control:
@@ -587,6 +608,17 @@ copilot
 # Summarizes conversation history, freeing up context space
 # Your key findings and decisions are preserved
 ```
+
+You can also give `/compact` optional focus instructions to shape what gets prioritized in the summary:
+
+```bash
+copilot
+
+> /compact focus on the list of bugs we found and decisions made
+# Summarizes history, keeping bug list and decisions prominent
+```
+
+> 💡 **When to use focus instructions**: If your conversation covered many topics, focus instructions help `/compact` retain the parts most relevant to your next steps so you don't lose the thread.
 
 #### Context Efficiency Tips
 
@@ -881,9 +913,10 @@ copilot --add-dir /path/to/directory
 1. **`@` syntax** gives Copilot CLI context about files, directories, and images
 2. **Multi-turn conversations** build on each other as context accumulates
 3. **Sessions auto-save**: name them at startup with `--name`, resume by name with `--resume=<name>`, or use `--continue` to pick up the most recent session
-4. **Context windows** have limits: manage them with `/clear`, `/compact`, `/context`, `/new`, and `/rewind`
-5. **Permission flags** (`--add-dir`, `--allow-all`) control multi-directory access. Use them wisely!
-6. **Image references** (`@screenshot.png`) help debug UI issues visually
+4. **Context windows** have limits: manage them with `/clear`, `/compact`, `/context`, `/new`, and `/rewind`. Use `/compact focus on <topic>` to shape what gets kept in the summary
+5. **Persistent memory** (`/memory`) lets Copilot CLI remember preferences and facts across *all* sessions — not just the current one
+6. **Permission flags** (`--add-dir`, `--allow-all`) control multi-directory access. Use them wisely!
+7. **Image references** (`@screenshot.png`) help debug UI issues visually
 
 > 📚 **Official Documentation**: [Use Copilot CLI](https://docs.github.com/copilot/how-tos/copilot-cli/use-copilot-cli) for the complete reference on context, sessions, and working with files.
 

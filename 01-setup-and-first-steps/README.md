@@ -436,14 +436,15 @@ That's it for getting started! As you become comfortable, you can explore additi
 | Command | What It Does |
 |---------|--------------|
 | `/clear` | Abandons the current session (no history saved) and starts a fresh conversation |
-| `/compact` | Summarize conversation to reduce context usage |
+| `/compact` | Summarize conversation to reduce context usage (optionally add focus instructions, e.g. `/compact focus on the bug list`) |
 | `/context` | Show context window token usage and visualization |
 | `/keep-alive` | Prevent your system from sleeping while Copilot CLI is active — handy for long-running tasks on a laptop |
+| `/memory [on\|off\|show]` | Enable, disable, or view persistent memory — facts and preferences remembered across all sessions |
 | `/new` | Ends the current session (saving it to history for search/resume) and starts a fresh conversation. |
 | `/resume` | Switch to a different session (optionally specify session ID or name) |
 | `/rename` | Rename the current session (omit the name to auto-generate one) |
 | `/rewind` | Open a timeline picker to roll back to any earlier point in the conversation |
-| `/usage` | Display session usage metrics and statistics |
+| `/usage` | Display session usage metrics and statistics, including quota progress bars |
 | `/session` | Show session info and workspace summary; use `/session delete`, `/session delete <id>`, or `/session delete-all` to remove sessions |
 | `/share` | Export session as a markdown file, GitHub gist, or self-contained HTML file |
 
